@@ -40,3 +40,5 @@ Thumbs.db
 
 .nx/cache
 .angular
+msal.config.json
+cypress.env.json
