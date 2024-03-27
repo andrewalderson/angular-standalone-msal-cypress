@@ -1,4 +1,9 @@
 import {
+  provideHttpClient,
+  withFetch,
+  withInterceptorsFromDi,
+} from '@angular/common/http';
+import {
   APP_INITIALIZER,
   ApplicationConfig,
   ApplicationInitStatus,
@@ -87,7 +92,6 @@ const _MSAL_INTERCEPTOR_CONFIG = new InjectionToken<MsalGuardConfiguration>(
     providedIn: 'root',
     factory: () => {
       const configuration = inject(_MSAL_CONFIG).interceptor;
-
       return {
         interactionType: configuration.interactionType,
         protectedResourceMap: new Map(configuration.protectedResourceMap),
@@ -139,5 +143,6 @@ export const appConfig: ApplicationConfig = {
       withGuard(_MSAL_GUARD_CONFIG),
       withInterceptor(_MSAL_INTERCEPTOR_CONFIG)
     ),
+    provideHttpClient(withFetch(), withInterceptorsFromDi()),
   ],
 };
