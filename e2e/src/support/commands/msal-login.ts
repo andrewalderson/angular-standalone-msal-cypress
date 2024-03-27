@@ -26,7 +26,7 @@ declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace Cypress {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    interface Chainable<Subject> {
+    interface Chainable {
       [commandName]: (options: MsalLoginOptions) => Chainable<Element>;
     }
   }
@@ -39,7 +39,7 @@ declare global {
       This command should be called before visiting any page in the app protected by MSAL.
     
       NOTE: An ROPC flow needs to be created in AD or AD B2C for this command to work.
-    */
+*/
 
 Cypress.Commands.add('msalLogin', (options: MsalLoginOptions) => {
   let chainable: Cypress.Chainable;
