@@ -1,10 +1,26 @@
 import { getGreeting } from '../support/app.po';
 
 describe('e2e', () => {
-  beforeEach(() => cy.login().visit('/'));
+  describe('user in not logged in', () => {
+    beforeEach(() => cy.visit('/'));
 
-  it('should display welcome message', () => {
-    getGreeting().contains(/Welcome/);
+    it('should redirect to the login page', () => {
+      cy.get('@getMsalConfig')
+        .its('response.body.auth.authority')
+        .then((authority: string) => {
+          cy.location().should('match', new RegExp(authority));
+        });
+    });
+  });
+
+  describe('user is logged in', () => {
+    beforeEach(() => {
+      cy.login().visit('/');
+    });
+
+    it('should display welcome message', () => {
+      getGreeting().contains(/Welcome/);
+    });
   });
 
   /**
