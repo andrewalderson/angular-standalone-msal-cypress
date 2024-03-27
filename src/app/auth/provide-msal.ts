@@ -93,7 +93,7 @@ export function withInterceptor(
         return configuration;
       },
     },
-    { provide: HTTP_INTERCEPTORS, useValue: MsalInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: MsalInterceptor, multi: true },
   ]);
 }
 
