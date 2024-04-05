@@ -56,7 +56,7 @@ function provideSafeAsync<T>(
 export const appConfig: ApplicationConfig = {
   providers: [
     provideSafeAsync(_MSAL_CONFIG, () =>
-      fetch('./assets/msal.config.json').then((response) => response.json())
+      fetch('/assets/msal.config.json').then((response) => response.json())
     ),
     provideRouter(appRoutes),
     provideMsal(
