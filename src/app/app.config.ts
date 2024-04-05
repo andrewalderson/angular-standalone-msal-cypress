@@ -23,7 +23,7 @@ import { provideMsal, withGuard, withInterceptor } from './auth/provide-msal';
 
 /**
  * Providers cannot be asynchronous so we can't wait for the fetch of
- * the msal cconfig to resolve.
+ * the msal config to resolve.
  * We get around that by using APP_INITIALIZER to reolve the Promise
  */
 function provideSafeAsync<T>(
