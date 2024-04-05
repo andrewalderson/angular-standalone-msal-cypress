@@ -8,7 +8,7 @@ describe('e2e', () => {
       cy.get('@getMsalConfig')
         .its('response.body.auth.authority')
         .then((authority: string) => {
-          cy.location().should('match', new RegExp(authority));
+          cy.location('href').should('match', new RegExp(authority, 'i'));
         });
     });
   });
