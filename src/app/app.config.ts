@@ -11,12 +11,12 @@ import {
 } from '@angular/router';
 import { BrowserUtils } from '@azure/msal-browser';
 import { appRoutes } from './app.routes';
+import { provideMsal, withGuard, withInterceptor } from './auth/provide-msal';
 import {
   _MSAL_GUARD_CONFIG,
   _MSAL_INSTANCE_CONFIG,
   _MSAL_INTERCEPTOR_CONFIG,
-} from './auth/msal.tokens';
-import { provideMsal, withGuard, withInterceptor } from './auth/provide-msal';
+} from './auth/tokens';
 
 declare global {
   interface Window {
