@@ -3,6 +3,7 @@ import { MsalRedirectComponent } from '@azure/msal-angular';
 import { AppComponent } from './app/app.component';
 import { appConfig } from './app/app.config';
 import { bootstrapMsalProviders } from './app/auth/bootstrap';
+import { environment } from './environments/environment';
 
 /**
  * We need to load the msal config and set the _MSAL_CONFIG provider
@@ -15,7 +16,7 @@ import { bootstrapMsalProviders } from './app/auth/bootstrap';
  * The bonus in this is that the redirect for the authentication will happen
  * before the app is bootstrapped
  */
-bootstrapMsalProviders('./assets/msal.config.json').then((msalProviders) =>
+bootstrapMsalProviders(environment.msalConfigUrl).then((msalProviders) =>
   bootstrapApplication(AppComponent, {
     providers: [appConfig.providers, msalProviders],
   })
