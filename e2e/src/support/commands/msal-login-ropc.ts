@@ -4,7 +4,7 @@ import {
 } from '@azure/msal-browser';
 import { TimeUtils } from '@azure/msal-common';
 
-const commandName = 'msalLogin';
+const commandName = 'msalLoginRopc';
 
 // This cache exists for the duration of the test run
 // We cache the token responses by the scopes they were requested with
@@ -14,7 +14,7 @@ const tokenResponseCache = new Map<
   { tokenResponse: ExternalTokenResponse; ttl: number }
 >();
 
-export type MsalLoginOptions = {
+export type MsalLoginRopcOptions = {
   authority: string;
   clientId: string;
   username: string;
@@ -27,7 +27,7 @@ declare global {
   namespace Cypress {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     interface Chainable {
-      [commandName]: (options: MsalLoginOptions) => Chainable<Element>;
+      [commandName]: (options: MsalLoginRopcOptions) => Chainable<Element>;
     }
   }
 }
@@ -41,7 +41,7 @@ declare global {
       NOTE: An ROPC flow needs to be created in AD or AD B2C for this command to work.
 */
 
-Cypress.Commands.add('msalLogin', (options: MsalLoginOptions) => {
+Cypress.Commands.add('msalLoginRopc', (options: MsalLoginRopcOptions) => {
   let chainable: Cypress.Chainable;
 
   // only scopes for api calls should be passed in

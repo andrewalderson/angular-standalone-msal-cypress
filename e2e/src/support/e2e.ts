@@ -15,7 +15,7 @@
 
 // Import commands.ts using ES2015 syntax:
 import './commands';
-import './commands/msal-login';
+import './commands/msal-login-ropc';
 
 const msalConfig = Cypress.env('msal');
 

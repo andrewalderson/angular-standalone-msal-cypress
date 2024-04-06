@@ -1,6 +1,6 @@
 /// <reference types="cypress" />
 
-import { MsalLoginOptions } from './commands/msal-login';
+import { MsalLoginRopcOptions } from './commands/msal-login-ropc';
 
 // ***********************************************
 // This example commands.ts shows you how to
@@ -16,14 +16,14 @@ declare global {
   namespace Cypress {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     interface Chainable {
-      login(options?: Partial<MsalLoginOptions>): Chainable<Element>;
+      login(options?: Partial<MsalLoginRopcOptions>): Chainable<Element>;
     }
   }
 }
 //
 // -- This is a parent command --
-Cypress.Commands.add('login', (options: Partial<MsalLoginOptions> = {}) => {
-  return cy.msalLogin({ ...Cypress.env('msal'), ...options });
+Cypress.Commands.add('login', (options: Partial<MsalLoginRopcOptions> = {}) => {
+  return cy.msalLoginRopc({ ...Cypress.env('msal'), ...options });
 });
 //
 // -- This is a child command --
