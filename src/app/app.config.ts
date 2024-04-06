@@ -3,62 +3,38 @@ import {
   withFetch,
   withInterceptorsFromDi,
 } from '@angular/common/http';
+import { ApplicationConfig } from '@angular/core';
 import {
-  APP_INITIALIZER,
-  ApplicationConfig,
-  ApplicationInitStatus,
-  InjectionToken,
-  Provider,
-  inject,
-} from '@angular/core';
-import { provideRouter } from '@angular/router';
+  provideRouter,
+  withDisabledInitialNavigation,
+  withEnabledBlockingInitialNavigation,
+} from '@angular/router';
+import { BrowserUtils } from '@azure/msal-browser';
 import { appRoutes } from './app.routes';
 import {
-  _MSAL_CONFIG,
   _MSAL_GUARD_CONFIG,
   _MSAL_INSTANCE_CONFIG,
   _MSAL_INTERCEPTOR_CONFIG,
 } from './auth/msal.tokens';
 import { provideMsal, withGuard, withInterceptor } from './auth/provide-msal';
 
-/**
- * Providers cannot be asynchronous so we can't wait for the fetch of
- * the msal config to resolve.
- * We get around that by using APP_INITIALIZER to reolve the Promise
- */
-function provideSafeAsync<T>(
-  token: T | InjectionToken<T>,
-  initializer: () => Promise<T>
-): Provider[] {
-  const container: { value?: T } = { value: undefined };
-  return [
-    {
-      provide: APP_INITIALIZER,
-      useValue: async () => {
-        container.value = await initializer();
-      },
-      multi: true,
-    },
-    {
-      provide: token,
-      useFactory: () => {
-        if (!inject(ApplicationInitStatus).done) {
-          throw new Error(
-            `Cannot inject ${token} until bootstrap is complete.`
-          );
-        }
-        return container.value;
-      },
-    },
-  ];
+declare global {
+  interface Window {
+    Cypress: unknown;
+  }
 }
+
+const disableInitialNavigation =
+  (BrowserUtils.isInIframe() && !window.Cypress) || BrowserUtils.isInPopup();
+
+const withInitialNavigation = () =>
+  disableInitialNavigation
+    ? withDisabledInitialNavigation()
+    : withEnabledBlockingInitialNavigation();
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideSafeAsync(_MSAL_CONFIG, () =>
-      fetch('/assets/msal.config.json').then((response) => response.json())
-    ),
-    provideRouter(appRoutes),
+    provideRouter(appRoutes, withInitialNavigation()),
     provideMsal(
       _MSAL_INSTANCE_CONFIG,
       withGuard(_MSAL_GUARD_CONFIG),
