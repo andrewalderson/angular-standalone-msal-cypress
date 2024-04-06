@@ -40,8 +40,13 @@ type MsalConfig = Configuration & {
   interceptor: MsalInterceptorConfiguration;
 };
 
-// IMPORTANT careful what you name these tokens so they don't conflict with the tokens defined by Msal
+/**
+ * These tokens should be considered private and are only used to configure msal
+ * We start them with an underscore so they don;t conflict
+ * with the tokens in the msal angualr library
+ */
 export const _MSAL_CONFIG = new InjectionToken<MsalConfig>('_MSAL_CONFIG');
+
 export const _MSAL_INSTANCE_CONFIG = new InjectionToken<Configuration>(
   '_MSAL_INSTANCE_CONFIG',
   {
