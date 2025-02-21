@@ -7,17 +7,22 @@
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	"features": {
 		"ghcr.io/rocker-org/devcontainer-features/apt-packages:1": {
-		// packages for Cypress
-		"packages": "libgtk2.0-0,libgtk-3-0,libgbm-dev,libnotify-dev,libgconf-2-4,libnss3,libxss1,libasound2,libxtst6,xauth,xvfb"
+			// packages for Cypress
+			"packages": "libgtk2.0-0,libgtk-3-0,libgbm-dev,libnotify-dev,libgconf-2-4,libnss3,libxss1,libasound2,libxtst6,xauth,xvfb"
 		}
 	},
-
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
-	"forwardPorts": [4200],
-
+	"forwardPorts": [
+		4200
+	],
+	// Need to set the network to the host or the apps won't be accessible outside the container
+	// We could also set the host on the ng serve or storybook command in the project.json file but since this is a devcontainer
+	// specific issue we are setting it here.
+	"runArgs": [
+		"--network=host"
+	],
 	// Use 'postCreateCommand' to run commands after the container is created.
 	"postCreateCommand": "npm install && npx cypress install",
-
 	// Configure tool-specific properties.
 	"customizations": {
 		"vscode": {
@@ -29,8 +34,8 @@
 			],
 			"settings": {
 				"editor.codeActionsOnSave": {
-				"source.organizeImports": "always",
-				"source.fixAll": "always"
+					"source.organizeImports": "always",
+					"source.fixAll": "always"
 				},
 				"editor.formatOnSave": true,
 				"git.inputValidation": true,
@@ -39,8 +44,6 @@
 			}
 		}
 	}
-
 	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
 	// "remoteUser": "root"
-
 }
