@@ -51,7 +51,7 @@ export function provideMsal(
   configuration: Configuration | InjectionToken<Configuration>,
   ...features: MsalFeature<MsalFeatureKind>[]
 ): EnvironmentProviders {
-  const providers: Provider[] = [
+  return makeEnvironmentProviders([
     MsalBroadcastService,
     MsalService,
     {
@@ -61,13 +61,8 @@ export function provideMsal(
           unwrapInjectionTokenIfNeeded(configuration)
         ),
     },
-  ];
-
-  for (const feature of features) {
-    providers.push(...feature.ɵproviders);
-  }
-
-  return makeEnvironmentProviders(providers);
+    features.map((feature) => feature.ɵproviders),
+  ]);
 }
 
 export function withInterceptor(
