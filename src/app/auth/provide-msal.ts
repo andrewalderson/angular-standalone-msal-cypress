@@ -56,12 +56,10 @@ export function provideMsal(
     MsalService,
     {
       provide: MSAL_INSTANCE,
-      useFactory: () => {
-        if (configuration instanceof InjectionToken) {
-          configuration = inject(configuration);
-        }
-        return new PublicClientApplication(configuration);
-      },
+      useFactory: () =>
+        new PublicClientApplication(
+          unwrapInjectionTokenIfNeeded(configuration)
+        ),
     },
   ];
 
@@ -86,12 +84,7 @@ export function withInterceptor(
   return makeMsalFeature(MsalFeatureKind.Interceptor, [
     {
       provide: MSAL_INTERCEPTOR_CONFIG,
-      useFactory: () => {
-        if (configuration instanceof InjectionToken) {
-          configuration = inject(configuration);
-        }
-        return configuration;
-      },
+      useFactory: () => unwrapInjectionTokenIfNeeded(configuration),
     },
     { provide: HTTP_INTERCEPTORS, useClass: MsalInterceptor, multi: true },
   ]);
@@ -110,12 +103,11 @@ export function withGuard(
     MsalGuard,
     {
       provide: MSAL_GUARD_CONFIG,
-      useFactory: () => {
-        if (configuration instanceof InjectionToken) {
-          configuration = inject(configuration);
-        }
-        return configuration;
-      },
+      useFactory: () => unwrapInjectionTokenIfNeeded(configuration),
     },
   ]);
+}
+
+function unwrapInjectionTokenIfNeeded<T>(token: InjectionToken<T> | T): T {
+  return token instanceof InjectionToken ? inject(token) : token;
 }
