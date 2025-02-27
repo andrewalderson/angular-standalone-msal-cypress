@@ -44,6 +44,9 @@
           "codeCoverage": true
         }
       }
+    },
+    "e2e-ci--**/*": {
+      "dependsOn": ["^msal:build"]
     }
   },
   "plugins": [
@@ -69,5 +72,6 @@
       "unitTestRunner": "jest"
     }
   },
-  "defaultProject": "msal"
+  "defaultProject": "msal",
+  "useLegacyCache": true
 }
