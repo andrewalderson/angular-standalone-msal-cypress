@@ -34,6 +34,9 @@ beforeEach(() => {
       // update the path to 'clientId' and 'authority' here
       res.body.auth.clientId = msalConfig.clientId;
       res.body.auth.authority = msalConfig.authority;
+      // need to ensure we use sessionStorage because if tokens are stored in localStorage the msal library will attempt to validate
+      // them by making a silent request which will fail because we have changed the authority and clientId
+      res.body.cache.cacheLocation = 'sessionStorage';
     });
   }).as('getMsalConfig');
 });
