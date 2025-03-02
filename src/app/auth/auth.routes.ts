@@ -1,9 +1,9 @@
 import { Route } from '@angular/router';
-import { MsalRedirectComponent } from '@azure/msal-angular';
+import { SigninCallbackPage } from './pages/signin-callback/signin-callback.page';
 
 // Routes specific to the Msal library
 export const authRoutes: Route[] = [
-  { path: '_signin-callback', component: MsalRedirectComponent },
+  { path: '_signin-callback', component: SigninCallbackPage },
   {
     path: '_login-failed',
     loadComponent: async () =>

@@ -15,7 +15,7 @@ describe('Auth', () => {
       .its('response.body.auth.redirectUri')
       .then((route) => {
         cy.visit(route);
-        cy.get('app-redirect').should('exist');
+        cy.get('app-signin-callback').should('exist');
       });
   });
   it('should be able to route to the login failed page', () => {
