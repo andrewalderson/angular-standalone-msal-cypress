@@ -10,6 +10,10 @@ describe('Auth', () => {
     cy.login().visit('/');
   });
 
+  it('should have msal redirect component on index page', () => {
+    cy.get('app-redirect').should('exist');
+  });
+
   it('should be able to route to the sign in redirect page', () => {
     cy.wait('@getMsalConfig')
       .its('response.body.auth.redirectUri')
