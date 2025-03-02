@@ -32,6 +32,8 @@ bootstrapMsalProviders(environment.msalConfigUrl).then((msalProviders) =>
   bootstrapApplication(AppComponent, {
     providers: [appConfig.providers, msalProviders],
   })
-    .then((ref) => ref.bootstrap(MsalRedirectComponent)) // this needs to be done because the MsalRedirectComponent is added to the index.html page
+    // this needs to be done because the MsalRedirectComponent is added to the index.html page
+    // not adding this will cause the app to freeze at the signin-callback page after authentication
+    .then((ref) => ref.bootstrap(MsalRedirectComponent))
     .catch((err) => console.error(err))
 );
