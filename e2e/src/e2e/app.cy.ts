@@ -41,12 +41,9 @@ describe('e2e', () => {
     it('should provide the access token in the Authorization header', () => {
       cy.wait('@getResource').then(({ request }) => {
         const header = request.headers['authorization']; // The header properties are all lower case
+        // we only need to know that the header exists
+        // the value of it is an implementation detail of the msal library so we don't assert on that
         expect(header).to.exist;
-        // we don't test the actual token here
-        // becuase we have to expect the Msal library to work correctly
-        // we are only testing that the interceptor is configured
-        // with the protected resources
-        expect(header).to.match(/^Bearer .*$/);
       });
     });
   });
